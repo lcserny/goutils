@@ -91,8 +91,8 @@ func MinInt(a, b int) int {
 
 func ReadFileToLines(file string) []string {
 	openFile, err := os.Open(file)
-	defer CloseFile(openFile)
 	CheckError(err)
+	defer CloseFile(openFile)
 
 	var lines []string
 	scanner := bufio.NewScanner(openFile)
