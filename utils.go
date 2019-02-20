@@ -5,8 +5,35 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strings"
 	"time"
 )
+
+type ConfigProperties map[string]string
+
+func ReadPropertiesFile(filename string) *ConfigProperties {
+	file, err := os.Open(filename)
+	CheckError(err)
+	defer CloseFile(file)
+
+	config := ConfigProperties{}
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if equal, comment := strings.Index(line, "="), strings.Index(line, "#"); equal >= 0 && comment == -1 {
+			if key := strings.TrimSpace(line[:equal]); len(key) > 0 {
+				value := ""
+				if len(line) > equal {
+					value = strings.TrimSpace(line[equal+1:])
+				}
+				config[key] = value
+			}
+		}
+	}
+
+	CheckError(scanner.Err())
+	return &config
+}
 
 func MakeTimestamp() int64 {
 	return time.Now().UnixNano() / int64(time.Millisecond)
@@ -61,4 +88,8 @@ func ReadFileToLines(file string) []string {
 func CloseFile(file *os.File) {
 	err := file.Close()
 	CheckError(err)
+}
+
+func LogError(message string, err error) {
+	log.Printf("ERROR: %s: %#v\n", message, err)
 }
