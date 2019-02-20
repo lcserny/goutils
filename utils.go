@@ -2,6 +2,7 @@ package goutils
 
 import (
 	"bufio"
+	"github.com/juju/errors"
 	"log"
 	"os"
 	"regexp"
@@ -58,7 +59,7 @@ func MakeTimestamp() int64 {
 
 func CheckError(e error) {
 	if e != nil {
-		log.Fatalf("ERROR: %#v", e)
+		log.Fatalf("ERROR: %#v", errors.Trace(e))
 	}
 }
 
@@ -108,5 +109,9 @@ func CloseFile(file *os.File) {
 }
 
 func LogError(message string, err error) {
-	log.Printf("ERROR: %s: %#v\n", message, err)
+	log.Printf("ERROR: %s: %#v\n", message, errors.Trace(err))
+}
+
+func LogInfo(message string) {
+	log.Printf("INFO: %s: %#v\n", message)
 }
