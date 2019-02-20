@@ -5,11 +5,28 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 )
 
 type ConfigProperties map[string]string
+
+func (p *ConfigProperties) HasProperty(propertyName string) bool {
+	_, exists := (*p)[propertyName]
+	return exists
+}
+
+func (p *ConfigProperties) GetPropertyAsInt(propertyName string) int {
+	val := (*p)[propertyName]
+	i, err := strconv.ParseInt(val, 0, 32)
+	CheckError(err)
+	return int(i)
+}
+
+func (p *ConfigProperties) GetPropertyAsString(propertyName string) string {
+	return (*p)[propertyName]
+}
 
 func ReadPropertiesFile(filename string) *ConfigProperties {
 	file, err := os.Open(filename)
