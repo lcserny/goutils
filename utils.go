@@ -113,5 +113,5 @@ func LogError(message string, err error) {
 }
 
 func LogInfo(message string) {
-	log.Printf("INFO: %s: %#v\n", message)
+	log.Printf("INFO: %s\n", message)
 }
