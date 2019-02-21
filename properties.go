@@ -15,8 +15,7 @@ func (p *ConfigProperties) HasProperty(propertyName string) bool {
 }
 
 func (p *ConfigProperties) GetPropertyAsInt(propertyName string) int {
-	val := (*p)[propertyName]
-	i, err := strconv.ParseInt(val, 0, 32)
+	i, err := strconv.ParseInt((*p)[propertyName], 0, 32)
 	LogFatal(err)
 	return int(i)
 }
