@@ -63,6 +63,12 @@ func CheckError(e error) {
 	}
 }
 
+func CheckErrorWithMessage(e error, message string) {
+	if e != nil {
+		log.Fatalf("ERROR: %s\n%#v", errors.Trace(e))
+	}
+}
+
 func GetRegexSubgroups(exp *regexp.Regexp, text string) map[string]string {
 	match := exp.FindStringSubmatch(text)
 	resultMap := make(map[string]string)
