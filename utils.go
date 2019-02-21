@@ -2,6 +2,8 @@ package goutils
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/gob"
 	"github.com/juju/errors"
 	"log"
 	"os"
@@ -21,7 +23,7 @@ func (p *ConfigProperties) HasProperty(propertyName string) bool {
 func (p *ConfigProperties) GetPropertyAsInt(propertyName string) int {
 	val := (*p)[propertyName]
 	i, err := strconv.ParseInt(val, 0, 32)
-	CheckError(err)
+	LogFatal(err)
 	return int(i)
 }
 
@@ -31,7 +33,7 @@ func (p *ConfigProperties) GetPropertyAsString(propertyName string) string {
 
 func ReadPropertiesFile(filename string) *ConfigProperties {
 	file, err := os.Open(filename)
-	CheckError(err)
+	LogFatal(err)
 	defer CloseFile(file)
 
 	config := ConfigProperties{}
@@ -49,7 +51,7 @@ func ReadPropertiesFile(filename string) *ConfigProperties {
 		}
 	}
 
-	CheckError(scanner.Err())
+	LogFatal(scanner.Err())
 	return &config
 }
 
@@ -57,15 +59,15 @@ func MakeTimestamp() int64 {
 	return time.Now().UnixNano() / int64(time.Millisecond)
 }
 
-func CheckError(e error) {
+func LogFatal(e error) {
 	if e != nil {
 		log.Fatalf("ERROR: %#v", errors.Trace(e))
 	}
 }
 
-func CheckErrorWithMessage(e error, message string) {
+func LogFatalWithMessage(e error, message string) {
 	if e != nil {
-		log.Fatalf("ERROR: %s\n%#v", errors.Trace(e))
+		log.Fatalf("ERROR: %s\n%#v", message, errors.Trace(e))
 	}
 }
 
@@ -98,7 +100,7 @@ func MinInt(a, b int) int {
 
 func ReadFileToLines(file string) []string {
 	openFile, err := os.Open(file)
-	CheckError(err)
+	LogFatal(err)
 	defer CloseFile(openFile)
 
 	var lines []string
@@ -111,13 +113,25 @@ func ReadFileToLines(file string) []string {
 
 func CloseFile(file *os.File) {
 	err := file.Close()
-	CheckError(err)
+	LogFatal(err)
 }
 
 func LogError(message string, err error) {
-	log.Printf("ERROR: %s: %#v\n", message, errors.Trace(err))
+	if err != nil {
+		log.Printf("ERROR: %s: %#v\n", message, errors.Trace(err))
+	}
 }
 
 func LogInfo(message string) {
 	log.Printf("INFO: %s\n", message)
+}
+
+func GetBytes(key interface{}) ([]byte, error) {
+	var buf bytes.Buffer
+	enc := gob.NewEncoder(&buf)
+	err := enc.Encode(key)
+	if err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
 }
