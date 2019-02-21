@@ -25,6 +25,10 @@ func (p *ConfigProperties) GetPropertyAsString(propertyName string) string {
 	return (*p)[propertyName]
 }
 
+func (p *ConfigProperties) GetPropertyAsBool(propertyName string) bool {
+	return strings.ToLower((*p)[propertyName]) == "true"
+}
+
 func ReadPropertiesFile(filename string) *ConfigProperties {
 	file, err := os.Open(filename)
 	LogFatal(err)
