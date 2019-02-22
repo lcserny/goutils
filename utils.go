@@ -38,6 +38,13 @@ func MinInt(a, b int) int {
 	return b
 }
 
+func MaxInt(a, b int) int {
+	if a < b {
+		return b
+	}
+	return a
+}
+
 func GetBytes(key interface{}) ([]byte, error) {
 	var buf bytes.Buffer
 	enc := gob.NewEncoder(&buf)
