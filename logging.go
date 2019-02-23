@@ -26,3 +26,7 @@ func LogError(message string, err error) {
 func LogInfo(message string) {
 	log.Printf("INFO: %s\n", message)
 }
+
+func LogWarning(message string) {
+	log.Printf("WARN: %s\n", message)
+}
