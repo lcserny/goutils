@@ -11,13 +11,19 @@ func LogFatal(e error) {
 	}
 }
 
-func LogFatalWithMessage(e error, message string) {
+func LogFatalWithMessage(message string, e error) {
 	if e != nil {
 		log.Fatalf("ERROR: %s\n%#v", message, errors.Trace(e))
 	}
 }
 
-func LogError(message string, err error) {
+func LogError(err error) {
+	if err != nil {
+		log.Printf("ERROR: %#v\n", errors.Trace(err))
+	}
+}
+
+func LogErrorWithMessage(message string, err error) {
 	if err != nil {
 		log.Printf("ERROR: %s: %#v\n", message, errors.Trace(err))
 	}
