@@ -20,6 +20,12 @@ func (p *ConfigProperties) GetPropertyAsInt(propertyName string) int {
 	return int(i)
 }
 
+func (p *ConfigProperties) GetPropertyAsInt64(propertyName string) int64 {
+	i, err := strconv.ParseInt((*p)[propertyName], 0, 64)
+	LogFatal(err)
+	return int64(i)
+}
+
 func (p *ConfigProperties) GetPropertyAsString(propertyName string) string {
 	return (*p)[propertyName]
 }
