@@ -7,13 +7,13 @@ import (
 
 func LogFatal(e error) {
 	if e != nil {
-		log.Fatalf("ERROR: %#v", errors.Trace(e))
+		log.Fatalf("ERROR: %s", errors.Trace(e))
 	}
 }
 
 func LogFatalWithMessage(message string, e error) {
 	if e != nil {
-		log.Fatalf("ERROR: %s\n%#v", message, errors.Trace(e))
+		log.Fatalf("ERROR: %s\n%s", message, errors.Trace(e))
 	}
 }
 
