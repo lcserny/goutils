@@ -19,13 +19,13 @@ func LogFatalWithMessage(message string, e error) {
 
 func LogError(err error) {
 	if err != nil {
-		log.Printf("ERROR: %#v\n", errors.Trace(err))
+		log.Printf("ERROR: %s\n", errors.Trace(err))
 	}
 }
 
 func LogErrorWithMessage(message string, err error) {
 	if err != nil {
-		log.Printf("ERROR: %s: %#v\n", message, errors.Trace(err))
+		log.Printf("ERROR: %s: %s\n", message, errors.Trace(err))
 	}
 }
 
