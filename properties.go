@@ -2,6 +2,7 @@ package goutils
 
 import (
 	"bufio"
+	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -39,8 +40,16 @@ func ReadPropertiesFile(filename string) *ConfigProperties {
 	LogFatal(err)
 	defer CloseFile(file)
 
+	return readPropertiesInternal(file)
+}
+
+func ReadProperties(properties string) *ConfigProperties {
+	return readPropertiesInternal(strings.NewReader(properties))
+}
+
+func readPropertiesInternal(reader io.Reader) *ConfigProperties {
 	config := ConfigProperties{}
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		line := scanner.Text()
 		if equal, comment := strings.Index(line, "="), strings.Index(line, "#"); equal >= 0 && comment == -1 {
