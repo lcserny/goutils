@@ -1,31 +1,31 @@
 package goutils
 
 import (
-	"github.com/juju/errors"
+	"github.com/pkg/errors"
 	"log"
 )
 
-func LogFatal(e error) {
-	if e != nil {
-		log.Fatalf("ERROR: %s", errors.Trace(e))
+func LogFatal(err error) {
+	if err != nil {
+		log.Fatalf("ERROR: %+v\n\n", errors.Wrap(err, ""))
 	}
 }
 
-func LogFatalWithMessage(message string, e error) {
-	if e != nil {
-		log.Fatalf("ERROR: %s\n%s", message, errors.Trace(e))
+func LogFatalWithMessage(message string, err error) {
+	if err != nil {
+		log.Fatalf("ERROR: %s, %+v\n\n", message, errors.Wrap(err, ""))
 	}
 }
 
 func LogError(err error) {
 	if err != nil {
-		log.Printf("ERROR: %s\n", errors.Trace(err))
+		log.Printf("ERROR: %+v\n\n", errors.Wrap(err, ""))
 	}
 }
 
 func LogErrorWithMessage(message string, err error) {
 	if err != nil {
-		log.Printf("ERROR: %s: %s\n", message, errors.Trace(err))
+		log.Printf("ERROR: %s, %+v\n\n", message, errors.Wrap(err, ""))
 	}
 }
 
