@@ -13,7 +13,7 @@ func LogFatal(err error) {
 
 func LogFatalWithMessage(message string, err error) {
 	if err != nil {
-		log.Fatalf("ERROR: %s, %+v\n\n", message, errors.Wrap(err, ""))
+		log.Fatalf("ERROR: %+v\n\n", errors.Wrap(err, message))
 	}
 }
 
@@ -25,7 +25,7 @@ func LogError(err error) {
 
 func LogErrorWithMessage(message string, err error) {
 	if err != nil {
-		log.Printf("ERROR: %s, %+v\n\n", message, errors.Wrap(err, ""))
+		log.Printf("ERROR: %+v\n\n", errors.Wrap(err, message))
 	}
 }
 
