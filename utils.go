@@ -3,6 +3,7 @@ package goutils
 import (
 	"bytes"
 	"encoding/gob"
+	"os"
 	"regexp"
 	"time"
 )
@@ -53,4 +54,21 @@ func GetBytes(key interface{}) ([]byte, error) {
 		return nil, err
 	}
 	return buf.Bytes(), nil
+}
+
+func GetRealPath(path string) (string, os.FileInfo) {
+	simLinkInfo, err := os.Lstat(path)
+	LogError(err)
+
+	// TODO: don't understand this if, but it works...
+	if simLinkInfo.Mode()&os.ModeSymlink == os.ModeSymlink {
+		realPath, err := os.Readlink(path)
+		LogError(err)
+		path = realPath
+	}
+
+	fileInfo, err := os.Stat(path)
+	LogError(err)
+
+	return path, fileInfo
 }
