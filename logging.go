@@ -5,9 +5,11 @@ import (
 	"log"
 )
 
+const NO_MESSAGE = "---"
+
 func LogFatal(err error) {
 	if err != nil {
-		log.Fatalf("ERROR: %+v\n\n", errors.Wrap(err, ""))
+		log.Fatalf("ERROR: %+v\n\n", errors.Wrap(err, NO_MESSAGE))
 	}
 }
 
@@ -19,7 +21,7 @@ func LogFatalWithMessage(message string, err error) {
 
 func LogError(err error) {
 	if err != nil {
-		log.Printf("ERROR: %+v\n\n", errors.Wrap(err, ""))
+		log.Printf("ERROR: %+v\n\n", errors.Wrap(err, NO_MESSAGE))
 	}
 }
 
