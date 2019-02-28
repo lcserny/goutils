@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-const NO_MESSAGE = "---"
+const NO_MESSAGE = "--- no message provided ---"
 
 func LogFatal(err error) {
 	if err != nil {
