@@ -5,6 +5,7 @@ import (
 	"encoding/gob"
 	"os"
 	"regexp"
+	"strings"
 	"time"
 )
 
@@ -21,6 +22,10 @@ func GetRegexSubgroups(exp *regexp.Regexp, text string) map[string]string {
 		}
 	}
 	return resultMap
+}
+
+func GetLinesFromString(content string) []string {
+	return strings.Split(content, "\n")
 }
 
 func StringsContain(strings []string, match string) bool {
