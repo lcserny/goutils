@@ -75,5 +75,9 @@ func GetRealPath(path string) (string, os.FileInfo) {
 	fileInfo, err := os.Stat(path)
 	LogError(err)
 
+	if path[len(path)-1:] == string(os.PathSeparator) {
+		path = path[:len(path)-1]
+	}
+
 	return path, fileInfo
 }
