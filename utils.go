@@ -1,6 +1,7 @@
 package goutils
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/gob"
 	"os"
@@ -24,8 +25,12 @@ func GetRegexSubgroups(exp *regexp.Regexp, text string) map[string]string {
 	return resultMap
 }
 
-func GetLinesFromString(content string) []string {
-	return strings.Split(content, "\n")
+func GetLinesFromString(content string) (lines []string) {
+	scanner := bufio.NewScanner(strings.NewReader(content))
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines
 }
 
 func StringsContain(strings []string, match string) bool {
