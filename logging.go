@@ -13,21 +13,9 @@ func LogFatal(err error) {
 	}
 }
 
-func LogFatalWithMessage(message string, err error) {
-	if err != nil {
-		log.Fatalf("ERROR: %+v\n\n", errors.Wrap(err, message))
-	}
-}
-
 func LogError(err error) {
 	if err != nil {
 		log.Printf("ERROR: %+v\n\n", errors.Wrap(err, NO_MESSAGE))
-	}
-}
-
-func LogErrorWithMessage(message string, err error) {
-	if err != nil {
-		log.Printf("ERROR: %+v\n\n", errors.Wrap(err, message))
 	}
 }
 
