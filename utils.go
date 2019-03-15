@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/gob"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
@@ -85,6 +86,11 @@ func GetRealPath(path string) (string, os.FileInfo) {
 	}
 
 	return path, fileInfo
+}
+
+func GetAbsCurrentPathOf(path string) string {
+	currentPath, _ := filepath.Abs(os.Args[0])
+	return filepath.Join(filepath.Dir(currentPath), path)
 }
 
 func LevenshteinDistance(source, target string) int {
