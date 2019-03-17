@@ -3,6 +3,7 @@ package goutils
 import (
 	"github.com/pkg/errors"
 	"log"
+	"os"
 )
 
 const NO_MESSAGE = "--- no message provided ---"
@@ -37,4 +38,10 @@ func LogInfo(message string) {
 
 func LogWarning(message string) {
 	log.Printf("WARN: %s\n", message)
+}
+
+func InitCurrentPathFileLogger(logFileName string) {
+	openFile, err := os.OpenFile(GetAbsCurrentPathOf(logFileName), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	LogFatal(err)
+	log.SetOutput(openFile)
 }
