@@ -44,7 +44,7 @@ func LogWarning(message string) {
 // If file created needs to be where its executed (as opposed to where binary is situated) set `GOUTILS_EXEC_LOGINIT` env var to true
 func InitFileLogger(logFileName string) {
 	enabled, exists := os.LookupEnv("GOUTILS_EXEC_LOGINIT")
-	if exists && strings.ToLower(enabled) == "true" {
+	if !exists || strings.ToLower(enabled) != "true" {
 		logFileName = GetAbsCurrentPathOf(logFileName)
 	}
 
